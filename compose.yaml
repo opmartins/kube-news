@@ -1,0 +1,35 @@
+services:
+  postgre:
+    image: postgres:16.4-bullseye
+    ports: 
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: Pg123
+      POSTGRES_USER: kubenews
+      POSTGRES_DB: kubenews
+    volumes:
+      - postgre_docker_vol:/var/lib/postgresql/data
+      - /Users/opmartins/labs/transfer_area:/transfer_area #bind mount para transferir arquivos de teste
+    networks:
+      - kube_news_net
+
+  kube_news:
+    image: opmartins/kube-news:v2
+    ports:
+      - 8080:8080
+    networks:
+      - kube_news_net
+    environment:
+      DB_DATABASE: kubenews
+      DB_USERNAME: kubenews
+      DB_PASSWORD: Pg123
+      DB_HOST: postgre
+
+volumes:
+  postgre_docker_vol:
+    name: postgre_exemplo_vol
+    #external: true
+
+networks:
+  kube_news_net:
+    driver: bridge
