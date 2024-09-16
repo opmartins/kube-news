@@ -14,11 +14,16 @@ services:
       - kube_news_net
 
   kube_news:
-    image: opmartins/kube-news:v2
+    image: opmartins/kube-news
+    build:
+      context: ./src
+      dockerfile: Dockerfile
     ports:
       - 8080:8080
     networks:
       - kube_news_net
+    depends_on:
+      - postgre
     environment:
       DB_DATABASE: kubenews
       DB_USERNAME: kubenews
