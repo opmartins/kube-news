@@ -1,0 +1,4 @@
+services:
+  kube_news:
+    ports:
+      - 8181:8181

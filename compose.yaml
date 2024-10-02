@@ -13,10 +13,22 @@ services:
     networks:
       - kube_news_net
 
-  web-app:
-    extends:
-      file: kube-news.compose.yaml
-      service: kube_news
+  kube_news:
+    image: opmartins/kube-news:${KUBENEWS_TAG}
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    networks:
+      - kube_news_net
+    depends_on:
+      - postgre
+    environment:
+      DB_DATABASE: ${POSTGRES_DB}
+      DB_USERNAME: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_HOST: postgre
 
 volumes:
   postgre_docker_vol:
