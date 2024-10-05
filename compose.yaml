@@ -19,7 +19,7 @@ services:
       context: ./src
       dockerfile: Dockerfile
     ports:
-      - 8080:8080
+      - "${PORT:-8080}:8080"
     networks:
       - kube_news_net
     depends_on:
