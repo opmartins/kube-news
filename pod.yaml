@@ -1,11 +1,30 @@
 apiVersion: v1
 kind: Pod
 metadata:
-    name: meupod
+    name: meupod1
+    labels:
+        app: web
+        versao: blue
 spec:
-    container:
+    containers:
     - name: web
         image: kubedevio/web-color:blue
+        ports:
+            - name: http
+            containerPort:80
+            protocol: TCP
+___
+apiVersion: v1
+kind: Pod
+metadata:
+    name: meupod2
+    labels:
+        app: web
+        versao: green
+spec:
+    containers:
+    - name: web
+        image: kubedevio/web-color:green
         ports:
             - name: http
             containerPort:80
